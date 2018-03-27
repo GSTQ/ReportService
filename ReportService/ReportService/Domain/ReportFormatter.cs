@@ -1,23 +1,52 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ReportService.Domain
 {
-    public class ReportFormatter
+    public static class ReportFormatter
     {
-        public ReportFormatter(Employee e)
+        public static void AddNewLine(this Report report)
         {
-            Employee = e;
+            report.Data = report.Data + Environment.NewLine;
         }
 
-        public Action<Employee, Report> NL = (e, s) => s.S = s.S + Environment.NewLine;
-        public Action<Employee, Report> WL = (e, s) => s.S = s.S + "--------------------------------------------";
-        public Action<Employee, Report> WT = (e, s) => s.S = s.S + "         ";
-        public Action<Employee, Report> WE = (e, s) => s.S = s.S + e.Name;
-        public Action<Employee, Report> WS = (e, s) => s.S = s.S + e.Salary + "р";
-        public Action<Employee, Report> WD = (e, s) => s.S = s.S + e.Department;
-        public Employee Employee { get; }
+        public static void AddHorizontalLine(this Report report)
+        {
+            report.Data = report.Data + "--------------------------------------------";
+        }
+
+        public static void AddTab(this Report report)
+        {
+            report.Data = report.Data = report.Data + "         ";
+        }
+
+        public static void AddHeader(this Report report, string month, int year)
+        {
+            report.Data = report.Data + $"{month} {year}";
+        }
+
+        public static void AddEmployeeName(this Report report, Employee employee)
+        {
+            report.Data = report.Data + employee.Name;
+        }
+
+        public static void AddSalary(this Report report, Employee employee)
+        {
+            report.Data = report.Data + $"{employee.Salary}р";
+        }
+
+        public static void AddDepartment(this Report report, string department)
+        {
+            report.Data = report.Data + department;
+        }
+
+        public static void AddTotalByDepartment(this Report report, int total)
+        {
+            report.Data = report.Data + $"Всего по отделу {total}р";
+        }
+
+        public static void AddTotalByCompany(this Report report, int total)
+        {
+            report.Data = report.Data + $"Всего по предприятию {total}р";
+        }
     }
 }
